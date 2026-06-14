@@ -1,0 +1,111 @@
+@startuml Finansee - Modelo de Entidades
+
+!define ENTITY_COLOR #E1F5FE
+!define TABLE_BG #B3E5FC
+
+skinparam linetype ortho
+skinparam backgroundColor #FEFEFE
+
+entity "👤 Usuarios" as usuarios {
+  *id : UUID <<PK>>
+  --
+  nome : String
+  email : String <<UNIQUE>>
+  senha : String
+  ativo : Boolean
+  data_criacao : DateTime
+  data_atualizacao : DateTime
+}
+
+entity "💳 Contas" as contas {
+  *id : UUID <<PK>>
+  *usuario_id : UUID <<FK>>
+  --
+  numero_conta : String <<UNIQUE>>
+  tipo_conta : Enum (Corrente, Poupança)
+  saldo : Decimal
+  data_abertura : DateTime
+  ativa : Boolean
+}
+
+entity "💰 Transacoes" as transacoes {
+  *id : UUID <<PK>>
+  *conta_origem_id : UUID <<FK>>
+  *conta_destino_id : UUID <<FK>>
+  *categoria_id : UUID <<FK>>
+  --
+  tipo : Enum (Entrada, Saída, Transferência)
+  valor : Decimal
+  descricao : String
+  data_transacao : DateTime
+  data_criacao : DateTime
+  status : Enum (Pendente, Confirmada, Cancelada)
+}
+
+entity "📂 Categorias" as categorias {
+  *id : UUID <<PK>>
+  *usuario_id : UUID <<FK>>
+  --
+  nome : String
+  descricao : String
+  cor : String
+  ativa : Boolean
+  data_criacao : DateTime
+}
+
+entity "📊 Orcamentos" as orcamentos {
+  *id : UUID <<PK>>
+  *usuario_id : UUID <<FK>>
+  *categoria_id : UUID <<FK>>
+  --
+  valor_limite : Decimal
+  valor_gasto : Decimal
+  mes : Integer
+  ano : Integer
+  alertado : Boolean
+}
+
+entity "💾 Carteiras" as carteiras {
+  *id : UUID <<PK>>
+  *usuario_id : UUID <<FK>>
+  --
+  nome : String
+  descricao : String
+  saldo_total : Decimal
+  data_criacao : DateTime
+}
+
+entity "🔗 Carteira_Contas" as carteira_contas {
+  *carteira_id : UUID <<FK>>
+  *conta_id : UUID <<FK>>
+  --
+  percentual : Decimal
+  data_adicao : DateTime
+}
+
+entity "📱 Dispositivos" as dispositivos {
+  *id : UUID <<PK>>
+  *usuario_id : UUID <<FK>>
+  --
+  tipo : String
+  token_push : String
+  ativo : Boolean
+  ultimo_acesso : DateTime
+}
+
+' Relacionamentos
+usuarios ||--o{ contas : "possui"
+usuarios ||--o{ categorias : "cria"
+usuarios ||--o{ orcamentos : "define"
+usuarios ||--o{ carteiras : "gerencia"
+usuarios ||--o{ dispositivos : "registra"
+
+contas ||--o{ transacoes : "origina"
+contas ||--o{ transacoes : "destino"
+categorias ||--o{ transacoes : "classifica"
+categorias ||--o{ orcamentos : "limita"
+
+carteiras ||--o{ carteira_contas : "contém"
+contas ||--o{ carteira_contas : "integra"
+
+@enduml

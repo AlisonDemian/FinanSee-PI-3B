@@ -1,0 +1,40 @@
+@startuml Finansee API Architecture
+!theme plain
+skinparam linetype ortho
+
+rectangle "🌐 API Layer" as api_layer {
+  rectangle "Controller" as ctrl {
+    - handleRequest()
+    - validateInput()
+    - sendResponse()
+  }
+}
+
+rectangle "⚙️ Business Logic" as business {
+  rectangle "Service" as svc {
+    - processData()
+    - applyRules()
+    - generateReport()
+  }
+
+  rectangle "Repository" as repo {
+    - save()
+    - findById()
+    - delete()
+  }
+}
+
+rectangle "💾 Data Layer" as data {
+  rectangle "Database" as db {
+    - connect()
+    - query()
+    - commit()
+    -- PostgreSQL
+  }
+}
+
+ctrl --> svc : uses
+svc --> repo : uses
+repo --> db : queries
+
+@enduml
