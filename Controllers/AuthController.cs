@@ -18,4 +18,23 @@ public class AuthController(IAuthService authService) : ControllerBase
         var response = _authService.Login(request);
         return Ok(response);
     }
+
+    [HttpGet("test-bcrypt")]
+    [AllowAnonymous]
+    public ActionResult TestBCrypt([FromQuery] string senha = "admin123", [FromQuery] string? hash = null)
+    {
+        var hashDoBanco = hash ?? "$2a$10$N9qo8uLOickgx2ZMRZoMye1tLqH.IbIjJqJ5z8tNKLLlGPFqYFZWi";
+        
+        var resultado = new
+        {
+            senhaTestada = senha,
+            hashTestado = hashDoBanco,
+            hashValido = BCrypt.Net.BCrypt.Verify(senha, hashDoBanco),
+            novoHashGerado = BCrypt.Net.BCrypt.HashPassword(senha),
+            novoHashValido = true, // Sempre será válido pois acabamos de gerar
+            instrucao = "Se hashValido = false, copie o novoHashGerado e atualize no banco"
+        };
+
+        return Ok(resultado);
+    }
 }

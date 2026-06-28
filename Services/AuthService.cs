@@ -81,11 +81,17 @@ public class AuthService(
             }
 
             _logger.LogDebug("Usuário encontrado. UsuarioId: {UsuarioId}, Nome: {Nome}", usuario.Id, usuario.Nome);
+            
+            // Log detalhado para debug
+            _logger.LogDebug("Hash do banco (primeiros 20 chars): {HashPreview}...", usuario.SenhaHash?.Substring(0, Math.Min(20, usuario.SenhaHash.Length)));
+            _logger.LogDebug("Senha recebida tem {Length} caracteres", request.Password?.Length ?? 0);
 
             bool senhaValida;
             try
             {
+                _logger.LogDebug("Iniciando verificação BCrypt...");
                 senhaValida = BCrypt.Net.BCrypt.Verify(request.Password, usuario.SenhaHash);
+                _logger.LogDebug("Resultado da verificação BCrypt: {Resultado}", senhaValida);
             }
             catch (Exception ex)
             {

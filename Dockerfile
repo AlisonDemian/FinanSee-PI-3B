@@ -22,6 +22,11 @@ RUN dotnet publish -c Release -o /app/publish --no-restore
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
+# Instala dependências do PostgreSQL para resolver o erro libgssapi_krb5.so.2
+RUN apt-get update && apt-get install -y \
+    libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
 # Porta padrão que o Kestrel escuta dentro do container desde o .NET 8
 EXPOSE 8080
 
