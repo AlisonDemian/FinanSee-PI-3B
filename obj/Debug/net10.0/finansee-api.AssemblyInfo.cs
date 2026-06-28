@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("finansee-api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5247b8cf4ff0c996701a03f48689087b11ce17e2")]
 [assembly: System.Reflection.AssemblyProductAttribute("finansee-api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("finansee-api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

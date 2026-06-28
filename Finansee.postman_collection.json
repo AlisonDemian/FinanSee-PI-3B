@@ -1,0 +1,104 @@
+{
+  "info": {
+    "name": "FinanSee API",
+    "_postman_id": "",
+    "description": "Collection gerada automaticamente com endpoints do projeto FinanSee",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://localhost:5001" },
+    { "key": "jwt", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Catalogos - Get Categorias",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }],
+        "url": { "raw": "{{baseUrl}}/api/catalogos/categorias", "host": ["{{baseUrl}}"], "path": ["api","catalogos","categorias"] }
+      }
+    },
+    {
+      "name": "Catalogos - Get Naturezas",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }],
+        "url": { "raw": "{{baseUrl}}/api/catalogos/naturezas?categoriaId={{categoriaId}}", "host": ["{{baseUrl}}"], "path": ["api","catalogos","naturezas"], "query": [{"key":"categoriaId","value":"{{categoriaId}}"}] }
+      }
+    },
+    {
+      "name": "Dashboard - Get",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/dashboard", "host":["{{baseUrl}}"], "path":["api","dashboard"] } }
+    },
+    {
+      "name": "Gastos - GetById",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/gastos/:id", "host":["{{baseUrl}}"], "path":["api","gastos",":id"], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "Gastos - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"dataDespesa\": \"2026-06-01T00:00:00Z\",\n  \"quantidadeRealizada\": 1,\n  \"valorUnitarioRealizado\": 100.0,\n  \"justificativa\": \"Motivo\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/projetos/:projetoId/gastos", "host":["{{baseUrl}}"], "path":["api","projetos",":projetoId","gastos"], "variable":[{"key":"projetoId","value":"1"}] }
+      }
+    },
+    {
+      "name": "Gastos - Update",
+      "request": {
+        "method": "PUT",
+        "header": [ { "key": "Authorization", "value": "Bearer {{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"dataDespesa\": \"2026-06-01T00:00:00Z\",\n  \"quantidadeRealizada\": 2,\n  \"valorUnitarioRealizado\": 150.0,\n  \"justificativa\": \"Atualizado\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/gastos/:id", "host":["{{baseUrl}}"], "path":["api","gastos",":id"], "variable":[{"key":"id","value":"1"}] }
+      }
+    },
+    {
+      "name": "Gastos - Delete",
+      "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/gastos/:id", "host":["{{baseUrl}}"], "path":["api","gastos",":id"], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "ItensOrcados - Create",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "Bearer {{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"naturezaDespesaId\": 1,\n  \"descricao\": \"Item exemplo\",\n  \"quantidadeOrcada\": 10,\n  \"valorUnitarioOrcado\": 50.0\n}" },
+        "url": { "raw": "{{baseUrl}}/api/projetos/:projetoId/itens-orcados", "host":["{{baseUrl}}"], "path":["api","projetos",":projetoId","itens-orcados"], "variable":[{"key":"projetoId","value":"1"}] }
+      }
+    },
+    {
+      "name": "ItensOrcados - Update",
+      "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "Bearer {{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"naturezaDespesaId\": 1,\n  \"descricao\": \"Atualizado\",\n  \"quantidadeOrcada\": 5,\n  \"valorUnitarioOrcado\": 60.0\n}" }, "url": { "raw": "{{baseUrl}}/api/itens-orcados/:id", "host":["{{baseUrl}}"], "path":["api","itens-orcados",":id"], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "ItensOrcados - Delete",
+      "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/itens-orcados/:id", "host":["{{baseUrl}}"], "path":["api","itens-orcados",":id"], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "Projetos - Get All",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/projetos", "host":["{{baseUrl}}"], "path":["api","projetos"] } }
+    },
+    {
+      "name": "Projetos - Get By Id",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/projetos/:id?status={{status}}", "host":["{{baseUrl}}"], "path":["api","projetos",":id"], "query":[{"key":"status","value":"{{status}}"}], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "Projetos - Create",
+      "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "Bearer {{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Projeto Exemplo\",\n  \"numeroEdital\": \"123/2026\",\n  \"dataInicio\": \"2026-07-01T00:00:00Z\",\n  \"dataFim\": \"2026-12-31T00:00:00Z\",\n  \"valorTotalOrcamento\": 100000.0\n}" }, "url": { "raw": "{{baseUrl}}/api/projetos", "host":["{{baseUrl}}"], "path":["api","projetos"] } }
+    },
+    {
+      "name": "Projetos - Update",
+      "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "Bearer {{jwt}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"titulo\": \"Projeto Atualizado\",\n  \"numeroEdital\": \"123/2026\",\n  \"dataInicio\": \"2026-07-01T00:00:00Z\",\n  \"dataFim\": \"2026-12-31T00:00:00Z\",\n  \"valorTotalOrcamento\": 120000.0\n}" }, "url": { "raw": "{{baseUrl}}/api/projetos/:id", "host":["{{baseUrl}}"], "path":["api","projetos",":id"], "variable":[{"key":"id","value":"1"}] } }
+    },
+    {
+      "name": "Relatorios - Get",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/relatorios", "host":["{{baseUrl}}"], "path":["api","relatorios"] } }
+    },
+    {
+      "name": "Relatorios - Evolucao",
+      "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{jwt}}" }], "url": { "raw": "{{baseUrl}}/api/relatorios/evolucao?projetoId={{projetoId}}&tipo={{tipo}}", "host":["{{baseUrl}}"], "path":["api","relatorios","evolucao"], "query":[{"key":"projetoId","value":"{{projetoId}}"},{"key":"tipo","value":"{{tipo}}"}] } }
+    }
+  ]
+}

@@ -13,7 +13,6 @@ public class ProjetoUpsertRequest
     public DateOnly DataInicio { get; set; }
     public DateOnly? DataFim { get; set; }
 
-    [Range(typeof(decimal), "0.01", "999999999999999")]
     public decimal ValorTotalOrcamento { get; set; }
 
     public int? UsuarioResponsavelId { get; set; }
