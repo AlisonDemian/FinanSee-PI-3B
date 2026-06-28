@@ -16,12 +16,6 @@ public class AuthController(IAuthService authService) : ControllerBase
     public ActionResult<AuthResponse> Login([FromBody] LoginRequest request)
     {
         var response = _authService.Login(request);
-
-        if (response is null)
-        {
-            return Unauthorized(new { message = "E-mail ou senha inválidos." });
-        }
-
         return Ok(response);
     }
 }

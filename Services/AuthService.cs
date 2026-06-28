@@ -38,7 +38,7 @@ public class AuthService(
         return BuildAuthResponse(usuario);
     }
 
-    public AuthResponse? Login(LoginRequest request)
+    public AuthResponse Login(LoginRequest request)
     {
         var email = request.Email.Trim().ToLowerInvariant();
 
@@ -46,9 +46,14 @@ public class AuthService(
             .AsNoTracking()
             .FirstOrDefault(x => x.Email == email && x.Ativo);
 
-        if (usuario is null || !BCrypt.Net.BCrypt.Verify(request.Password, usuario.SenhaHash))
+        if (usuario is null)
         {
-            return null;
+            throw new UnauthorizedAccessException("E-mail ou senha inválidos.");
+        }
+
+        if (!BCrypt.Net.BCrypt.Verify(request.Password, usuario.SenhaHash))
+        {
+            throw new UnauthorizedAccessException("E-mail ou senha inválidos.");
         }
 
         return BuildAuthResponse(usuario);
